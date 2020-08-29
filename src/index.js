@@ -2,16 +2,29 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import * as serviceWorker from './serviceWorker';
+
+import greeting, {sum, name as newName}  from './demo/example';
+
+// import greeting from './demo';
+
+
+// import * as properties  from './demo/example';
+
+// console.log(properties.sum(15,6));
+// import {sum} from './demo/example';
+// import {name} from './demo/example';
+
+
+// greeting();
+
+// sum(1,2);
+
+// console.log(newName);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  // <React.StrictMode>
+    <App />,
+  // </React.StrictMode>,
   document.getElementById('root')
 );
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
