@@ -1,9 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import Name from './demo/Name';
 import Surname from './demo/Surname';
-
+import User from './demo/User';
 
 function Person(props){
 let name = props.name;
@@ -25,20 +24,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
+
+      <User name='John' surname='Smith'/>
+
 
        {/*<Person />*/}
 
-        <Person name = 'Jack' surname='Smith'/>
+{/*         <Person name = 'Jack' surname='Smith'/>
         <Person name = 'Sarah'/>
 
         <Name name = 'Harry'/>
         <Name name = 'Bob'/>
 
-        <Surname />
+        <Surname /> */}
 
         <a
           className="App-link"

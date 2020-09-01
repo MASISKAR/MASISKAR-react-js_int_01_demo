@@ -83,7 +83,7 @@ class User {
 
 new User();
 
-console.log(user.getFullName());
+// console.log(user.getFullName());
 
 
 
