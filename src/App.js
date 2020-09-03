@@ -1,36 +1,39 @@
 import React from 'react';
 import './App.css';
-import Name from './demo/Name';
-import Surname from './demo/Surname';
-import User from './demo/User';
+import Counter from './demo/Counter';
 
-function Person(props){
-let name = props.name;
-let surname = props.surname;
+// import Name from './demo/Name';
+// import Surname from './demo/Surname';
+// import User from './demo/User';
 
-  return (
-    <div>
-    <h1>Welcome!</h1>
-    <Name name = {name}/>
-    <Surname surname = {surname}/>
-    </div>
-  );
-}
+// function Person(props){
+// let name = props.name;
+// let surname = props.surname;
+
+//   return (
+//     <div>
+//     <h1>Welcome!</h1>
+//     <Name name = {name}/>
+//     <Surname surname = {surname}/>
+//     </div>
+//   );
+// }
 
 
 
 function App() {
 
   return (
-    <div className="App">
-      <header className="App-header">
+    <div >
+      <header >
+        <Counter />
 
-      <User name='John' surname='Smith'/>
+        {/* <User name='John' surname='Smith'/> */}
 
 
-       {/*<Person />*/}
+        {/*<Person />*/}
 
-{/*         <Person name = 'Jack' surname='Smith'/>
+        {/*         <Person name = 'Jack' surname='Smith'/>
         <Person name = 'Sarah'/>
 
         <Name name = 'Harry'/>
@@ -38,14 +41,6 @@ function App() {
 
         <Surname /> */}
 
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
     </div>
   );

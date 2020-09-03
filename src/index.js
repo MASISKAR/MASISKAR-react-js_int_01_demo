@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 
-import greeting, {sum, name as newName}  from './demo/example';
+// import greeting, {sum, name as newName}  from './demo/example';
 
 // import greeting from './demo';
 
