@@ -1,11 +1,15 @@
 import React from 'react';
 import Product from './components/Product';
+import Input from './components/Input';
 
 function App() {
 
   return (
     <div >
-    <Product 
+    <Input />
+   
+{
+  /*     <Product 
     name="banabas" 
     price="1$" 
     description="Fresh bananas from Ecuador"
@@ -15,7 +19,8 @@ function App() {
     name="oranges" 
     price="2$" 
     description="Fresh oranges from Greece"
-    />
+    /> */
+}
     </div>
   );
 }
