@@ -4,6 +4,9 @@ class Counter extends Component {
     constructor(props) {
         super(props);
         console.log('constructor');
+        this.state = {
+            name: props.name
+        }
     }
 
 
@@ -37,7 +40,7 @@ class Counter extends Component {
 
     // }
 
-    handleButtonClick = (type)=>{
+    handleButtonClick = (type) =>{
         let {count} = this.state;
 console.log('count before', count);
 
