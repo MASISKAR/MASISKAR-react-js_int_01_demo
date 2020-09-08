@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import classes from './style.module.scss';
+
+console.log(classes);
 
 class Price extends Component {
     constructor(props) {
@@ -35,7 +38,7 @@ class Price extends Component {
         let { price } = this.state;
 
         return (
-            <p>
+            <p className={classes.price}>
                 Price: {price}
                 <button
                     onClick={this.changeCurrency}
