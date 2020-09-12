@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col, InputGroup, FormControl, Button, Card } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import idGenerator from '../helpers/idGenerator';
 import NewTask from './NewTask';
 import Task from './Task';

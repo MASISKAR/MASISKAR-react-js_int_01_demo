@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {Card, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
