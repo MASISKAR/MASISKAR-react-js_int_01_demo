@@ -34,6 +34,7 @@ sendValue = ()=>{
 }
 
 render(){
+const {disabled} = this.props;
 
     return (
         <InputGroup
@@ -46,11 +47,13 @@ render(){
             placeholder="Input task"
             aria-label="Input task"
             aria-describedby="basic-addon2"
+            disabled = {disabled}
         />
         <InputGroup.Append>
             <Button
                 onClick={this.sendValue}
                 variant="outline-primary"
+                disabled = {disabled}
             >
                 Add task
              </Button>

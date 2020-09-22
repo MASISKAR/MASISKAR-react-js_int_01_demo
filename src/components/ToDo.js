@@ -54,11 +54,11 @@ class ToDo extends Component {
         this.setState({ editTask: task });
     };
 
-    onRemoveSelected = ()=>{
+    onRemoveSelected = () => {
         const checkedTasks = new Set(this.state.checkedTasks);
         let tasks = [...this.state.tasks];
 
-        checkedTasks.forEach(taskId =>{
+        checkedTasks.forEach(taskId => {
             tasks = tasks.filter(task => task.id !== taskId);
         });
 
@@ -71,14 +71,14 @@ class ToDo extends Component {
         });
     };
 
-    toggleConfirm = ()=>{
+    toggleConfirm = () => {
         this.setState({
             showConfirm: !this.state.showConfirm
         });
     };
 
-    handleSave = (taskId, value)=>{
-        
+    handleSave = (taskId, value) => {
+
         const tasks = [...this.state.tasks];
 
         const taskIndex = tasks.findIndex(task => task.id === taskId);
@@ -95,7 +95,7 @@ class ToDo extends Component {
     };
 
     render() {
-        const {checkedTasks, tasks, showConfirm, editTask} = this.state;
+        const { checkedTasks, tasks, showConfirm, editTask } = this.state;
 
         const tasksComponents = tasks.map((task) =>
             <Col key={task.id}>
@@ -103,7 +103,8 @@ class ToDo extends Component {
                     data={task}
                     onRemove={this.removeTask}
                     onCheck={this.handleCheck(task.id)}
-                    onEdit = {this.handleEdit(task)}
+                    onEdit={this.handleEdit(task)}
+                    disabled={!!checkedTasks.size}
                 />
             </Col>
         );
@@ -115,6 +116,7 @@ class ToDo extends Component {
                     <Col md={{ span: 6, offset: 3 }}>
                         <NewTask
                             onAdd={this.addTask}
+                            disabled={!!checkedTasks.size}
                         />
                     </Col>
 
@@ -125,28 +127,28 @@ class ToDo extends Component {
                     {tasksComponents}
                 </Row>
                 <Row className='justify-content-center'>
-                <Button 
-                variant="danger"
-                disabled = {checkedTasks.size ? false : true }
-                onClick={this.toggleConfirm}
-                >
-                Remove selected
+                    <Button
+                        variant="danger"
+                        disabled={!checkedTasks.size}
+                        onClick={this.toggleConfirm}
+                    >
+                        Remove selected
                 </Button>
                 </Row>
 
                 { showConfirm &&
-                    <Confirm 
-                count = {checkedTasks.size}
-                onSubmit = {this.onRemoveSelected}
-                onCancel = {this.toggleConfirm}
-                />
+                    <Confirm
+                        count={checkedTasks.size}
+                        onSubmit={this.onRemoveSelected}
+                        onCancel={this.toggleConfirm}
+                    />
                 }
-                {!!editTask && 
-                    <Modal 
-                    // number = {2}
-                    value={editTask}
-                    onSave = {this.handleSave}
-                    onCancel = {this.handleEdit(null)}
+                {!!editTask &&
+                    <Modal
+                        // number = {2}
+                        value={editTask}
+                        onSave={this.handleSave}
+                        onCancel={this.handleEdit(null)}
                     />
                 }
             </Container>
