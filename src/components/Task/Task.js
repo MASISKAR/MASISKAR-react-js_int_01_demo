@@ -43,9 +43,9 @@ class Task extends PureComponent {
                     onClick={this.toggleCheckbox}
                 />
                 <Card.Body>
-                    <Card.Title>Task</Card.Title>
+                    <Card.Title>{data.title}</Card.Title>
                     <Card.Text>
-                        {data.text}
+                        {data.description}
                     </Card.Text>
                     <Button 
                     className = 'm-1'
