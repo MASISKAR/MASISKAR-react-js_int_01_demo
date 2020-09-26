@@ -10,7 +10,8 @@ class ToDo extends Component {
         tasks: [],
         checkedTasks: new Set(),
         showConfirm: false,
-        editTask: null
+        editTask: null,
+        openNewTaskModal: false
     };
 
     componentDidMount(){
@@ -55,7 +56,8 @@ class ToDo extends Component {
                 }
 
                 this.setState({
-                    tasks: [task, ...this.state.tasks]
+                    tasks: [task, ...this.state.tasks],
+                    openNewTaskModal: false
                 });
             })
             .catch((err) => {
@@ -127,6 +129,12 @@ class ToDo extends Component {
         });
     };
 
+    toggleNewTaskModal = ()=>{
+        this.setState({
+            openNewTaskModal: !this.state.openNewTaskModal
+        });
+    };
+
     render() {
         const { checkedTasks, tasks, showConfirm, editTask } = this.state;
 
@@ -147,10 +155,15 @@ class ToDo extends Component {
                 <Row >
 
                     <Col md={{ span: 6, offset: 3 }}>
-                        <NewTask
-                            onAdd={this.addTask}
-                            disabled={!!checkedTasks.size}
-                        />
+                    <Button
+                    variant="primary"
+                    className='m-3'
+                    disabled={checkedTasks.size}
+                    onClick={this.toggleNewTaskModal}
+                >
+                    Add new Task
+            </Button>
+
                     </Col>
 
                 </Row>
@@ -184,6 +197,14 @@ class ToDo extends Component {
                         onCancel={this.handleEdit(null)}
                     />
                 }
+
+                { this.state.openNewTaskModal &&
+                    <NewTask
+                            onAdd={this.addTask}
+                            onCancel = {this.toggleNewTaskModal}
+                        />
+                }
+
             </Container>
         );
     }

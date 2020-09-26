@@ -1,30 +1,30 @@
 .a{
     background: green;
-    width: 500px;
-    height: 500px;
+    /* width: 500px; */
+    /* height: 500px; */
     font-size: 60px;
     text-align: right;
 }
 
 .b{
     background: blue;
-    width: 300px;
-    height: 300px;
+    /* width: 300px; */
+    /* height: 300px; */
     font-size: 50px;
     text-align: right;
 }
 
 .c{
     background: orange;
-    width: 150px;
-    height: 150px;
+    /* width: 150px; */
+    /* height: 150px; */
     font-size: 50px;
     text-align: right;
 }
 
 .d{
     background: aqua;
-    width: 50px;
-    height: 50px;
+    /* width: 50px; */
+    /* height: 50px; */
     text-align: right;
 }

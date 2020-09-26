@@ -2,11 +2,10 @@ import React, { memo } from 'react';
 
 
 function E(props){
-    console.log('E render');
-      
+  
     return (
        <div className="d">
-       {props.data}
+       Surname: {props.data}
        </div>
     );
 }
