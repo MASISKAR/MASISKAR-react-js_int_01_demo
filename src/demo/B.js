@@ -1,66 +1,56 @@
-import React, { Component } from 'react';
-import C from './C';
+import React, {Component} from 'react';
 
 class B extends Component{
-    constructor(props){
-        super(props);
-      this.state = {
-          price: props.price,
-          rate: "$"
-      };
-        console.log('B constructor');
-      }
-     
-      componentDidMount(){
-        console.log('B componentDidMount');
-  }
+state = {
+    inputValue: '',
+    params: {value: 0}
 
-  componentDidUpdate(prevProps, prevState){
-    console.log('B componentDidUpdate');
-    console.log('B prevProps', prevProps);
-    console.log('B prevState', prevState);
+};
 
-    console.log('B state', this.state);
-    console.log('B props', this.props);
-    if(prevProps.price < 15 && this.props.price >=15){
-        this.setState({
-            rate: '֏'
-        });
+handleChange = (event)=>{
+                
+    // const params = {...this.state.params};
+    // params.value = 15;
+
+    // this.setState({
+    //     inputValue: event.target.value,
+    //     params: params
+    // });
+
+    this.setState({
+        inputValue: event.target.value,
+        params: {...this.state.params, value: this.state.params.value+1}
+    });
+
+};
+
+handleClick = ()=>{
+    const {inputValue} = this.state;
+    this.props.onSendValue(inputValue);
+
+    this.setState({
+        inputValue: ''
+    });
+}
+
+    render(){
+        return (
+            <>
+            <div>{this.props.text}</div>
+            <input 
+            type="text" 
+            value = {this.state.inputValue}
+            placeholder='Input something...'
+            onChange = {this.handleChange}
+            />
+            <input 
+            type="button" 
+            value='Send data'
+            onClick = {this.handleClick}
+            />
+            </>
+        );
     }
-
-    if(prevProps.price !== this.props.price){
-        this.setState({
-            price: this.props.price
-        });
-    }
-}
-
-componentWillUnmount(){
-    console.log('B componentWillUnmount');
-}
-
-// shouldComponentUpdate(nexProps, nextState){
-//     if(nexProps.price !== this.props.price){
-//         return true;
-//     }
-//     return false;
-// }
-
-render(){
-    console.log('B render');
-
-    return (
-       <div className="b">
-       <button>B</button>
-      <p> Price: {this.state.price} {this.state.rate}</p>
-      {/* <p> Price: {this.props.price} {this.state.rate}</p> */}
-
-       <C name='some component' />
-       </div>
-    );
-}
-
-
 }
 
 export default B;

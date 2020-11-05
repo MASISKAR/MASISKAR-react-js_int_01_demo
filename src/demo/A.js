@@ -1,44 +1,33 @@
 import React, { Component } from 'react';
-// import B from './B';
-import D from './D';
-import E from './E';
+import B from './B';
+import C from './C';
 
-class A extends Component{
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-
-    //     };
-    //   }
-     
+class A extends Component {
     state = {
-        name: 'John',
-        surname: 'Smith',
-        value: "",
+        fruits: ['Apple', 'Orange'],
+        text: ''
     };
 
-saveValue = (value)=>{
-this.setState({
-    value: value
-});
-};
+    saveValue = (value)=>{
+        this.setState({
+            text: value
+        });
+    };
 
-render(){
+    render() {
+        const {fruits} = this.state;
 
-    return (
-        <>
-       <D data={this.state.name}
-       onSendValue = {this.saveValue}
-       
-       />
-       <E 
-       data={this.state.value}
-       />
-       </>
-    );
-}
-
-
+        return (
+            <div>
+                <B 
+                text = {fruits[0]}
+                onSendValue = {this.saveValue}
+                />
+                <C text = {this.state.text}/>
+        
+            </div>
+        );
+    }
 }
 
 export default A;
