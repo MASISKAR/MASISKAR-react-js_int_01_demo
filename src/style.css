@@ -1,30 +1,18 @@
-.a{
-    background: green;
-    /* width: 500px; */
-    /* height: 500px; */
-    font-size: 60px;
-    text-align: right;
+.app{
+    padding: 10px;
 }
 
-.b{
-    background: blue;
-    /* width: 300px; */
-    /* height: 300px; */
-    font-size: 50px;
-    text-align: right;
+.main{
+    border: 1px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.c{
-    background: orange;
-    /* width: 150px; */
-    /* height: 150px; */
-    font-size: 50px;
-    text-align: right;
-}
-
-.d{
-    background: aqua;
-    /* width: 50px; */
-    /* height: 50px; */
-    text-align: right;
+.block{
+    width: 150px;
+    height: 150px;
+    background: rgb(45, 126, 49);
+    margin: 5px;
+    border: 1px solid #000;
 }
