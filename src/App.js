@@ -15,7 +15,7 @@ function App() {
 <NavMenu />
 <Switch>
    <Route path='/' exact component={ToDo}/>
-   <Route path='/task' exact component={SingleTask}/>
+   <Route path='/task/:id' exact component={SingleTask}/>
    <Route path='/task/1' exact  component={SingleTask}/>
    <Route path='/not-found' exact  component={NotFound}/>
    <Redirect to='/not-found'/>

@@ -241,7 +241,6 @@ class ToDo extends Component {
                 }
                 {!!editTask &&
                     <EditTaskModal
-                        value={editTask}
                         data = {editTask}
                         onSave={this.handleSave}
                         onCancel={this.handleEdit(null)}

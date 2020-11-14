@@ -7,11 +7,23 @@ export default function NavMenu(){
     return (
         <Navbar bg="light" variant="light">
             <Navbar.Brand>
-            <Link to='/'>Home</Link>
+            <NavLink 
+            to='/'
+            activeClassName = 'activeLink'
+            exact
+            >
+             Home
+             </NavLink>
             </Navbar.Brand>
+
             <Nav className="mr-auto">
                 
-            <Link to='/task'>Task</Link>
+            <NavLink
+            exact
+            activeClassName = 'activeLink'
+            to='/task'
+            
+            >Task</NavLink>
 
             <a href="https://reactrouter.com/web/guides/quick-start" target='_blank'>Go to documentation</a>
 
