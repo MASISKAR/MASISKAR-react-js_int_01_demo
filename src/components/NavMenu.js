@@ -19,6 +19,9 @@ export default function NavMenu(){
             <Nav className="mr-auto">
                 
             <NavLink
+            style = {
+                {color: 'red', textDecoration: 'none'}
+            }
             exact
             activeClassName = 'activeLink'
             to='/task'

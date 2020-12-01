@@ -131,6 +131,7 @@ class SingleTask extends PureComponent {
                     }
             </div> :
             <Spinner/>
+            
 
         }
         </>
