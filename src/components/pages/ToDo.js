@@ -4,6 +4,7 @@ import NewTask from '../NewTask/NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
+import {connect} from 'react-redux';
 
 class ToDo extends Component {
     state = {
@@ -200,6 +201,7 @@ class ToDo extends Component {
             </Col>
         );
 
+        // console.log('this.props',this.props)
         return (
             <Container fluid={true}>
                 <Row >
@@ -253,10 +255,31 @@ class ToDo extends Component {
                         onCancel={this.toggleNewTaskModal}
                     />
                 }
-
+                <div>number ----{this.props.number}</div>
+                <button 
+                onClick={() => this.props.changeCount(25)}
+                >
+                Chcnge count</button>
             </Container>
         );
     }
 }
 
-export default ToDo;
+// export default ToDo;
+
+const mapStateToProps = (state)=>{
+ return {
+    connected: state.connected,
+    number: state.count
+ };
+};
+
+const mapDispatchToProps = (dispatch)=>{
+
+return {
+    changeCount: (value)=> { dispatch({type: 'CHANGE_COUNT', value})}
+}
+
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ToDo);
