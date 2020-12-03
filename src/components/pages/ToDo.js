@@ -4,7 +4,9 @@ import NewTask from '../NewTask/NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
+import Spinner from '../Spinner/Spinner';
 import {connect} from 'react-redux';
+import {getTasks} from '../../store/actions';
 
 class ToDo extends Component {
     state = {
@@ -16,25 +18,26 @@ class ToDo extends Component {
     };
 
     componentDidMount() {
-        fetch('http://localhost:3001/task', {
-            method: 'GET',
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((tasks) => {
-                if (tasks.error) {
-                    throw tasks.error;
-                }
+        this.props.getTasks();
+        // fetch('http://localhost:3001/task', {
+        //     method: 'GET',
+        //     headers: {
+        //         "Content-Type": 'application/json',
+        //     }
+        // })
+        //     .then((response) => response.json())
+        //     .then((tasks) => {
+        //         if (tasks.error) {
+        //             throw tasks.error;
+        //         }
 
-                this.setState({
-                    tasks
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
+        //         this.setState({
+        //             tasks
+        //         });
+        //     })
+        //     .catch((err) => {
+        //         console.log('err', err);
+        //     });
     }
 
     addTask = (data) => {
@@ -188,7 +191,9 @@ class ToDo extends Component {
     };
 
     render() {
-        const { checkedTasks, tasks, showConfirm, editTask } = this.state;
+        const { checkedTasks, showConfirm, editTask } = this.state;
+        const {tasks, showSpinner} = this.props;
+
         const tasksComponents = tasks.map((task) =>
             <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
                 <Task
@@ -203,6 +208,9 @@ class ToDo extends Component {
 
         // console.log('this.props',this.props)
         return (
+            <>
+           { showSpinner ?
+            <Spinner /> :
             <Container fluid={true}>
                 <Row >
 
@@ -261,7 +269,9 @@ class ToDo extends Component {
                 >
                 Chcnge count</button>
             </Container>
-        );
+            }
+            </>
+            );
     }
 }
 
@@ -269,17 +279,21 @@ class ToDo extends Component {
 
 const mapStateToProps = (state)=>{
  return {
-    connected: state.connected,
-    number: state.count
+    tasks: state.tasks,
+    showSpinner: state.loading
  };
 };
 
-const mapDispatchToProps = (dispatch)=>{
+// const mapDispatchToProps = (dispatch)=>{
 
-return {
-    changeCount: (value)=> { dispatch({type: 'CHANGE_COUNT', value})}
+// return {
+//     changeCount: (value)=> { dispatch({type: 'CHANGE_COUNT', value})}
+// }
+
+// };
+
+const mapDispatchToProps = {
+    getTasks: getTasks
 }
-
-};
 
 export default connect(mapStateToProps, mapDispatchToProps)(ToDo);

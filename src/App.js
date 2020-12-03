@@ -20,9 +20,6 @@ function App() {
    <Route path='/not-found' exact  component={NotFound}/>
    <Redirect to='/not-found'/>
 </Switch>
-
-
-
    </div>
   );
 }
