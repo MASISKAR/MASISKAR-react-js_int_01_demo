@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
-import {Link, NavLink} from 'react-router-dom';
+import {NavLink} from 'react-router-dom';
 
 export default function NavMenu(){
 
@@ -18,17 +18,7 @@ export default function NavMenu(){
 
             <Nav className="mr-auto">
                 
-            <NavLink
-            style = {
-                {color: 'red', textDecoration: 'none'}
-            }
-            exact
-            activeClassName = 'activeLink'
-            to='/task'
-            
-            >Task</NavLink>
 
-            <a href="https://reactrouter.com/web/guides/quick-start" target='_blank'>Go to documentation</a>
 
             </Nav>
         </Navbar>

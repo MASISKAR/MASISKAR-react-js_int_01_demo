@@ -1,16 +1,14 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import NewTask from '../NewTask/NewTask';
 import Task from '../Task/Task';
 import Confirm from '../Confirm';
 import EditTaskModal from '../EditTaskModal';
-import Spinner from '../Spinner/Spinner';
 import {connect} from 'react-redux';
 import {getTasks} from '../../store/actions';
 
-class ToDo extends Component {
+class ToDo extends PureComponent {
     state = {
-        tasks: [],
         checkedTasks: new Set(),
         showConfirm: false,
         editTask: null,
@@ -19,51 +17,18 @@ class ToDo extends Component {
 
     componentDidMount() {
         this.props.getTasks();
-        // fetch('http://localhost:3001/task', {
-        //     method: 'GET',
-        //     headers: {
-        //         "Content-Type": 'application/json',
-        //     }
-        // })
-        //     .then((response) => response.json())
-        //     .then((tasks) => {
-        //         if (tasks.error) {
-        //             throw tasks.error;
-        //         }
-
-        //         this.setState({
-        //             tasks
-        //         });
-        //     })
-        //     .catch((err) => {
-        //         console.log('err', err);
-        //     });
     }
 
-    addTask = (data) => {
+    componentDidUpdate(prevProps){
 
-        fetch('http://localhost:3001/task', {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((task) => {
-                if (task.error) {
-                    throw task.error;
-                }
+    if(!prevProps.addTaskSuccess && this.props.addTaskSuccess){
+        this.setState({
+            openNewTaskModal: false
+        });
+    }
 
-                this.setState({
-                    tasks: [task, ...this.state.tasks],
-                    openNewTaskModal: false
-                });
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-    };
+
+    }
 
 
     removeTask = (taskId) => () => {
@@ -192,7 +157,7 @@ class ToDo extends Component {
 
     render() {
         const { checkedTasks, showConfirm, editTask } = this.state;
-        const {tasks, showSpinner} = this.props;
+        const {tasks} = this.props;
 
         const tasksComponents = tasks.map((task) =>
             <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
@@ -206,11 +171,8 @@ class ToDo extends Component {
             </Col>
         );
 
-        // console.log('this.props',this.props)
         return (
-            <>
-           { showSpinner ?
-            <Spinner /> :
+
             <Container fluid={true}>
                 <Row >
 
@@ -259,18 +221,12 @@ class ToDo extends Component {
 
                 { this.state.openNewTaskModal &&
                     <NewTask
-                        onAdd={this.addTask}
                         onCancel={this.toggleNewTaskModal}
                     />
                 }
-                <div>number ----{this.props.number}</div>
-                <button 
-                onClick={() => this.props.changeCount(25)}
-                >
-                Chcnge count</button>
+                
             </Container>
-            }
-            </>
+
             );
     }
 }
@@ -280,17 +236,10 @@ class ToDo extends Component {
 const mapStateToProps = (state)=>{
  return {
     tasks: state.tasks,
-    showSpinner: state.loading
+    addTaskSuccess: state.addTaskSuccess
  };
 };
 
-// const mapDispatchToProps = (dispatch)=>{
-
-// return {
-//     changeCount: (value)=> { dispatch({type: 'CHANGE_COUNT', value})}
-// }
-
-// };
 
 const mapDispatchToProps = {
     getTasks: getTasks

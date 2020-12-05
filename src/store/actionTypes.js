@@ -1,7 +1,9 @@
-export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
-export const GETTING_TASKS = 'GETTING_TASKS';
-export const GET_TASKS_FAILURE = 'GET_TASKS_FAILURE';
+export const LOADING = 'LOADING';
+export const ERROR = 'ERROR';
 
-export const EDITING_TASK = 'EDITING_TASK';
+export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
+
 export const EDIT_TASK_SUCCESS = 'EDIT_TASK_SUCCESS';
-export const EDIT_TASK_FAILURE = 'EDIT_TASK_FAILURE';
+
+export const ADD_TASK_SUCCESS = 'ADD_TASK_SUCCESS';
+export const ADDING_TASK = 'ADDING_TASK';
