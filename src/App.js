@@ -33,7 +33,6 @@ class App extends PureComponent {
             <Switch>
               <Route path='/' exact component={ToDo} />
               <Route path='/task/:id' exact component={SingleTask} />
-              <Route path='/task/1' exact component={SingleTask} />
               <Route path='/not-found' exact component={NotFound} />
               <Redirect to='/not-found' />
             </Switch>

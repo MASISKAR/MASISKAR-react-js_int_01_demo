@@ -17,8 +17,20 @@ export default function NavMenu(){
             </Navbar.Brand>
 
             <Nav className="mr-auto">
-                
-
+            <NavLink 
+            to='/about'
+            activeClassName = 'activeLink'
+            exact
+            >
+             About
+             </NavLink>                
+             <NavLink 
+             to='/contact'
+             activeClassName = 'activeLink'
+             exact
+             >
+              Contact
+              </NavLink>
 
             </Nav>
         </Navbar>

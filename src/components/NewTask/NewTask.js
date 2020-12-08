@@ -139,7 +139,6 @@ if(!valid){
 
 
 NewTask.propTypes = {
-    addTask: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
 };
 
