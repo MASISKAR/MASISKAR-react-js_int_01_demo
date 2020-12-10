@@ -3,10 +3,12 @@ import * as actionTypes from './actionTypes';
 
 const defaultState = {
   tasks: [],
+  task: null,
   loading: false,
   error: null,
   addTaskSuccess: false,
   removeTasksSuccess: false,
+  removeTaskSuccess: false,
   editTaskSuccess: false,
   successMessage: null
 };
@@ -43,6 +45,14 @@ export const mainReducer = (state = defaultState, action) => {
       };
     }
 
+    case actionTypes.GET_TASK_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        task: action.task,
+      };
+    }
+
     case actionTypes.ADDING_TASK: 
     return {
       ...loadingState,
@@ -66,14 +76,31 @@ export const mainReducer = (state = defaultState, action) => {
     };
 
     case actionTypes.REMOVE_TASK_SUCCESS: {
-      const newTasks = state.tasks.filter(task => task._id !== action.taskId);
+        const newState = {
+          ...state,
+          loading: false,
+          successMessage: 'Task removed successfully!'
+        };
 
-      return {
-        ...state,
-        loading: false,
-        tasks: newTasks,
-        successMessage: 'Task removed successfully!'
-      };
+
+      if(action.from === 'single'){
+        return {
+         ...newState,
+          task: null,
+          removeTaskSuccess: true,
+        };
+      }
+      else {
+        const newTasks = state.tasks.filter(task => task._id !== action.taskId);
+
+        return {
+          ...newState,
+          tasks: newTasks
+        };
+      }
+
+
+     
     }
 
     case actionTypes.REMOVING_TASKS: 
@@ -107,17 +134,30 @@ export const mainReducer = (state = defaultState, action) => {
     }
 
     case actionTypes.EDIT_TASK_SUCCESS: {
-      const tasks = [...state.tasks];
-      const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
-      tasks[foundIndex] = action.editedTask;
-
-      return {
+      const newState = {
         ...state,
         loading: false,
         editTaskSuccess: true,
         successMessage: 'Task edited successfully',
-        tasks: tasks
-      };
+      }
+
+      if(action.from === 'single'){
+        return {
+         ...newState,
+          task: action.editedTask
+        };
+      }
+      else {
+        const tasks = [...state.tasks];
+        const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
+        tasks[foundIndex] = action.editedTask;
+  
+        return {
+          ...newState,
+          tasks: tasks
+        };
+      }
+
     }
 
 

@@ -1,65 +1,35 @@
 import React, { PureComponent } from 'react';
-import Spinner from '../Spinner/Spinner';
 import { Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
 import EditTaskModal from '../EditTaskModal';
+import {getTask, removeTask} from '../../store/actions';
+import {connect} from 'react-redux';
+import {formatDate} from '../../helpers/utils';
 
 class SingleTask extends PureComponent {
    state = {
-       task: null,
        isEdit: false
    };
 
     componentDidMount(){
         const taskId = this.props.match.params.id;
+        this.props.getTask(taskId);
+    }
 
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'GET',
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((task) => {
-                if (task.error) {
-                    throw task.error;
-                }
+    componentDidUpdate(prevProps){
+        if(!prevProps.removeTaskSuccess && this.props.removeTaskSuccess){
+            this.props.history.push('/');
+        }
 
-                    this.setState({
-                        task
-                    });
-           
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-
-
+        if(!prevProps.editTaskSuccess && this.props.editTaskSuccess){
+           this.toggleEditModal();
+        }
     }
 
     handleRemove = ()=>{
-        const taskId = this.state.task._id;
-
-        fetch(`http://localhost:3001/task/${taskId}`, {
-            method: 'DELETE',
-            headers: {
-                "Content-Type": 'application/json',
-            }
-        })
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.error) {
-                    throw data.error;
-                }
-
-               this.props.history.push('/');
-
-            })
-            .catch((err) => {
-                console.log('err', err);
-            });
-
+        const taskId = this.props.task._id;
+        this.props.removeTask(taskId, 'single');
     }
 
     toggleEditModal = ()=>{
@@ -68,13 +38,9 @@ class SingleTask extends PureComponent {
         });
     }
 
-    handleSave = (taskId, data)=>{
-        console.log(taskId, data);
-    }
-
     render() {
-        const {task, isEdit} = this.state;
-
+        const {isEdit} = this.state;
+        const {task} = this.props;
         return (
         <>
         {
@@ -82,8 +48,8 @@ class SingleTask extends PureComponent {
             <div >
             <p>Title: {task.title}</p>
             <p>Description: {task.description}</p>
-            <p>Date: {task.date.slice(0, 10)}</p>
-
+            <p>Date: {formatDate(task.date)}</p>
+            <p>Created: {formatDate(task.created_at)}</p>
             <OverlayTrigger
                         placement="top"
                         overlay={
@@ -125,13 +91,12 @@ class SingleTask extends PureComponent {
                     {isEdit && 
                     <EditTaskModal 
                     data={task}
-                    onSave={this.handleSave}
                     onCancel={this.toggleEditModal}
+                    from = 'single'
                     />
                     }
             </div> :
-            <Spinner/>
-            
+            <div>There is no task!</div>
 
         }
         </>
@@ -140,4 +105,16 @@ class SingleTask extends PureComponent {
     }
 }
 
-export default SingleTask;
+const mapStateToProps = (state)=>{
+    return {
+        task: state.task,
+        removeTaskSuccess: state.removeTaskSuccess,
+        editTaskSuccess: state.editTaskSuccess
+    };
+}
+
+const mapDispatchToProps = {
+    getTask,
+    removeTask
+};
+export default connect(mapStateToProps, mapDispatchToProps)(SingleTask);

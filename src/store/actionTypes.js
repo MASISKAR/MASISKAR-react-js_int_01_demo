@@ -3,6 +3,8 @@ export const ERROR = 'ERROR';
 
 export const GET_TASKS_SUCCESS = 'GET_TASKS_SUCCESS';
 
+export const GET_TASK_SUCCESS = 'GET_TASK_SUCCESS';
+
 export const EDITING_TASK = 'EDITING_TASK';
 export const EDIT_TASK_SUCCESS = 'EDIT_TASK_SUCCESS';
 
