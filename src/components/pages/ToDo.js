@@ -34,7 +34,6 @@ class ToDo extends PureComponent {
         });
     }
 
-    console.log('editTaskSuccess', prevProps.editTaskSuccess)
     if(!prevProps.editTaskSuccess && this.props.editTaskSuccess){
         this.setState({ editTask: null });
     }
