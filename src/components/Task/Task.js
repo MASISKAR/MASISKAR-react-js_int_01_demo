@@ -6,7 +6,7 @@ import styles from './task.module.css';
 import { Link } from 'react-router-dom';
 import {connect} from 'react-redux';
 import {removeTask} from '../../store/actions';
-import {formatDate, shortStr} from '../../helpers/utils'
+import {formatDate, shortStr} from '../../helpers/utils';
 import PropTypes from 'prop-types';
 
 class Task extends PureComponent {
