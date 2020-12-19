@@ -19,11 +19,15 @@ export function getTask(taskId){
 }
 
 export function getTasks(params={}){
-console.log('params', params)
 let url = `${apiUrl}/task`;
 
-if(params.search){
-    url = url+'?search='+params.search;
+let query="?";
+for(let key in params){
+query+= `${key}=${params[key]}&`;
+}
+
+if(query !== "?"){ 
+    url+= query
 }
 
     return (dispatch)=>{
@@ -95,6 +99,26 @@ export function editTask(taskId, data, from='tasks'){
         request(`${apiUrl}/task/${taskId}`, 'PUT', data)
         .then(editedTask => {
             dispatch({type: actionTypes.EDIT_TASK_SUCCESS, editedTask, from});  
+        })
+        .catch(err => {
+            dispatch({type: actionTypes.ERROR, error: err.message});  
+        });
+    }
+}
+
+export function changeTaskStatus(taskId, data, from='tasks'){
+
+    return (dispatch)=>{
+        dispatch({type: actionTypes.CHANGING_TASK_STATUS});
+
+        request(`${apiUrl}/task/${taskId}`, 'PUT', data)
+        .then(editedTask => {
+            dispatch({
+                type: actionTypes.CHANGE_TASK_STATUS_SUCCESS, 
+                editedTask, 
+                from,
+                status: data.status
+            });  
         })
         .catch(err => {
             dispatch({type: actionTypes.ERROR, error: err.message});  

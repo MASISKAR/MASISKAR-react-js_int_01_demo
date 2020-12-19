@@ -74,6 +74,7 @@ componentDidMount(){
             return;
         }
 
+        date = date || new Date();
         const data = {
             title,
             description,

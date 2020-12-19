@@ -7,6 +7,15 @@
     /* width: 18rem; */
 }
 
-.checked{
-    border: 1px solid red;
+.active{
+    border: 2px solid #0965c7;
 }
+
+.done{
+    border: 2px solid #9da1a5;
+}
+
+.checked{
+    border: 2px solid red;
+}
+
