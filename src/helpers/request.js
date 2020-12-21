@@ -3,6 +3,7 @@ function request(url, method='GET', body){
         method: method,
         headers: {
             "Content-Type": 'application/json',
+            "mode": 'no-cors'
         }
     };
 
