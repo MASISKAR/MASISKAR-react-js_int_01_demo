@@ -1,18 +1,31 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, createRef } from 'react';
 import { FormControl, Button, Modal, Form } from 'react-bootstrap';
 import PropTypes from 'prop-types';
 import DatePicker from 'react-datepicker';
 import "react-datepicker/dist/react-datepicker.css";
+import { connect } from 'react-redux';
+import { addTask } from '../../store/actions';
 import styles from './newTask.module.css';
 
 class NewTask extends PureComponent {
-    state = {
-        title: '',
-        description: '',
-        date: new Date(),
-        valid: true,
-        validationType: null
-    };
+    constructor(props) {
+        super(props)
+
+        this.state = {
+            title: '',
+            description: '',
+            date: new Date(),
+            valid: true,
+            validationType: null
+        };
+
+        this.titleRef = createRef();
+    }
+
+componentDidMount(){
+    this.titleRef.current.focus();
+}
+
 
     validationErrors = {
         requiredError: 'The field is required!',
@@ -53,7 +66,7 @@ class NewTask extends PureComponent {
             return;
         };
 
-        if(title.length > 50){
+        if (title.length > 50) {
             this.setState({
                 valid: false,
                 validationType: 'lengthError'
@@ -61,13 +74,14 @@ class NewTask extends PureComponent {
             return;
         }
 
+        date = date || new Date();
         const data = {
             title,
             description,
             date: date.toISOString().slice(0, 10)
         };
 
-        this.props.onAdd(data);
+        this.props.addTask(data);
 
     }
 
@@ -75,9 +89,9 @@ class NewTask extends PureComponent {
         const { valid, validationType } = this.state;
 
         let errorMessage = '';
-if(!valid){
-    errorMessage = this.validationErrors[validationType];
-}
+        if (!valid) {
+            errorMessage = this.validationErrors[validationType];
+        }
 
         return (
             <Modal
@@ -103,6 +117,7 @@ if(!valid){
                             placeholder="Title"
                             aria-label="Title"
                             aria-describedby="basic-addon2"
+                            ref = {this.titleRef}
                         />
                     </Form.Group>
 
@@ -137,8 +152,12 @@ if(!valid){
 
 
 NewTask.propTypes = {
-    onAdd: PropTypes.func.isRequired,
     onCancel: PropTypes.func.isRequired
 };
 
-export default NewTask;
+const mapDispatchToProps = {
+    addTask: addTask
+};
+
+
+export default connect(null, mapDispatchToProps)(NewTask);

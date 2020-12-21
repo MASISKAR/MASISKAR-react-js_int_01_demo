@@ -1,3 +1,8 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
 .app{
     padding: 10px;
 }
@@ -15,4 +20,9 @@
     background: rgb(45, 126, 49);
     margin: 5px;
     border: 1px solid #000;
+}
+
+.activeLink{
+    color: red;
+    font-weight: bold;
 }

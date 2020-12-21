@@ -1,15 +1,21 @@
 import React, { PureComponent } from 'react';
 import { Card, Button, Tooltip, OverlayTrigger } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import { faTrash, faEdit, faCheck, faHistory } from '@fortawesome/free-solid-svg-icons';
 import styles from './task.module.css';
+import { Link } from 'react-router-dom';
+import {connect} from 'react-redux';
+import {removeTask, changeTaskStatus} from '../../store/actions';
+import {formatDate, shortStr} from '../../helpers/utils';
+import PropTypes from 'prop-types';
 
 class Task extends PureComponent {
     state = {
         checked: false
     };
 
-    toggleCheckbox = () => {
+    
+   toggleCheckbox = () => {
         this.setState({
             checked: !this.state.checked
         });
@@ -24,12 +30,18 @@ class Task extends PureComponent {
     }
 
     render() {
-        const { data, onRemove, onEdit, disabled } = this.props;
+        const { data, removeTask, onEdit, disabled } = this.props;
         const { checked } = this.state;
 
         const cardClasses = ['card', styles.task];
         if (checked) {
             cardClasses.push(styles.checked);
+        }
+        if(data.status==='active'){
+            cardClasses.push(styles.active);
+        }
+        else {
+            cardClasses.push(styles.done);
         }
 
         return (
@@ -43,13 +55,69 @@ class Task extends PureComponent {
                     onClick={this.toggleCheckbox}
                 />
                 <Card.Body>
-                    <Card.Title>{data.title}</Card.Title>
+                    {disabled ?
+                        <Card.Title>{data.title}</Card.Title> :
+                        
+                        <Link to={`/task/${data._id}`} >
+                            <Card.Title>{data.title}</Card.Title>
+                        </Link>
+                    }
+
+
                     <Card.Text>
-                        Description: {data.description}
+                        Description: {shortStr(data.description, 25)}
                     </Card.Text>
                     <Card.Text>
-                        Date: {data.date ? data.date.slice(0, 10) : 'none'}
+                        Date: {formatDate(data.date)}
                     </Card.Text>
+                    <Card.Text>
+                        Created: {formatDate(data.created_at)}
+                    </Card.Text>
+                    <Card.Text>
+                        Status: {data.status}
+                    </Card.Text>
+
+                        {
+                            data.status === "active" ?
+                            <OverlayTrigger
+                            placement="top"
+                            overlay={
+                                <Tooltip>
+                                    <strong>Mark as done</strong>
+                                </Tooltip>
+                            }
+                        >
+                            <Button
+                                title='Mark as done'
+                                className='m-1'
+                                variant="success"
+                                onClick={()=> this.props.changeTaskStatus(data._id, {status: 'done'})}
+                                disabled={disabled}
+                            >
+                                <FontAwesomeIcon icon={faCheck} />
+                            </Button>
+                        </OverlayTrigger>
+                            :
+                        <OverlayTrigger
+                        placement="top"
+                        overlay={
+                            <Tooltip>
+                                <strong>Mark as active</strong>
+                            </Tooltip>
+                        }
+                    >
+                        <Button
+                            title='Mark as active'
+                            className='m-1'
+                            variant="warning"
+                            onClick={()=> this.props.changeTaskStatus(data._id, {status: 'active'})}
+                            disabled={disabled}
+                        >
+                            <FontAwesomeIcon icon={faHistory} />
+                        </Button>
+                    </OverlayTrigger>
+                        }
+
 
                     <OverlayTrigger
                         placement="top"
@@ -83,7 +151,7 @@ class Task extends PureComponent {
                             title='Remove'
                             className='m-1'
                             variant="danger"
-                            onClick={onRemove(data._id)}
+                            onClick={()=> removeTask(data._id)}
                             disabled={disabled}
                         >
                             <FontAwesomeIcon icon={faTrash} />
@@ -95,4 +163,16 @@ class Task extends PureComponent {
     }
 }
 
-export default Task;
+Task.propTypes = {
+    data: PropTypes.object.isRequired,
+    onCheck: PropTypes.func.isRequired,
+    onEdit: PropTypes.func.isRequired,
+    disabled: PropTypes.bool,
+};
+
+const mapDispatchToProps = {
+    removeTask,
+    changeTaskStatus
+};
+
+export default connect(null, mapDispatchToProps)(Task);
