@@ -99,7 +99,13 @@ class ToDo extends PureComponent {
                 <Row >
             <Search />
             
-                    <Col md={{ span: 6, offset: 3 }} className="text-center">
+                    <Col 
+                    sm={8}
+                    lg={10}
+                    xs={12}
+                    // col-sm-8
+                     md={{ span: 6, offset: 3 }}
+                      className="text-center">
                         <Button
                             variant="primary"
                             className='m-3'
