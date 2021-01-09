@@ -9,13 +9,14 @@ import Spinner from './components/Spinner/Spinner';
 import { Route, Switch, Redirect } from 'react-router-dom';
 import NavMenu from './components/NavMenu';
 import Register from './components/pages/Register/Register';
+import Login from './components/pages/Login/Login';
 import { ToastContainer, toast } from 'react-toastify';
 import { connect } from 'react-redux';
 
 class App extends PureComponent {
 
   componentDidUpdate() {
-    const { errorMessage, successMessage } = this.props;
+    const { errorMessage, successMessage, authErrorMessage, authSuccessMessage } = this.props;
     if (errorMessage) {
       toast.error(errorMessage);
     }
@@ -23,10 +24,17 @@ class App extends PureComponent {
       toast.success(successMessage);
     }
 
+    if (authErrorMessage) {
+      toast.error(authErrorMessage);
+    }
+    if (authSuccessMessage) {
+      toast.success(authSuccessMessage);
+    }
+
   }
 
   render() {
-    const { showSpinner } = this.props;
+    const { showSpinner, showAuthSpinner } = this.props;
     return (
       <>
           <div className='app'>
@@ -36,6 +44,7 @@ class App extends PureComponent {
               <Route path='/task/:id' exact component={SingleTask} />
               <Route path='/not-found' exact component={NotFound} />
               <Route path='/register' exact component={Register} />
+              <Route path='/login' exact component={Login} />
               <Redirect to='/not-found' />
             </Switch>
 
@@ -52,7 +61,7 @@ class App extends PureComponent {
             />
           </div>
         
-          {showSpinner && <Spinner />}
+          {(showSpinner || showAuthSpinner) && <Spinner />}
       </>
     );
   }
@@ -60,9 +69,12 @@ class App extends PureComponent {
 
 const mapStateToProps = (state) => {
   return {
-    errorMessage: state.error,
-    successMessage: state.successMessage,
-    showSpinner: state.loading,
+    errorMessage: state.taskReducer.error,
+    successMessage: state.taskReducer.successMessage,
+    authErrorMessage: state.authReducer.error,
+    authSuccessMessage: state.authReducer.successMessage,
+    showSpinner: state.taskReducer.loading,
+    showAuthSpinner: state.authReducer.loading
   }
 }
 

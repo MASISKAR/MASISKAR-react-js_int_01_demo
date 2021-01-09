@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
+import {connect} from 'react-redux';
+import {register} from '../../../store/userActions';
 import styles from './registerStyle.module.css';
 
-function Register() {
+function Register(props) {
     const [values, setValues] = useState({
         email: '',
         password: '',
-        confirmPassword: ''
+        confirmPassword: '',
+        name: '',
+        surname: ''
     });
 
     const [errors, setErrors] = useState({
@@ -17,13 +21,16 @@ function Register() {
 
     const handleSubmit = () => {
         const {email, password, confirmPassword} = values;
+        let valid = true;
 
             let passwordMessage = null;
         if(!confirmPassword){
             passwordMessage = 'Password is required';
+            valid = false;
         }
         else if(password !== confirmPassword){
-                passwordMessage = "Passwords didn't match"
+                passwordMessage = "Passwords didn't match";
+                valid = false;
             }
 
         setErrors({
@@ -32,7 +39,12 @@ function Register() {
             password: password ? null : 'Password is required'
         });
 
-        console.log(values);
+        if(valid){
+            console.log(values);
+            props.register(values);
+        }
+
+    
     };
 
     const handleChange = ({ target: { name, value } }) => {
@@ -48,6 +60,14 @@ function Register() {
 
     };
 
+    const {registerSuccess, history} = props;
+    useEffect(()=>{
+        if(registerSuccess){
+            history.push('/login');
+        }
+
+    }, [registerSuccess]);
+
     return (
 
         <div className={styles.main}>
@@ -58,6 +78,26 @@ function Register() {
                         <Form>
                             <h3 className={styles.heading}>Register</h3>
                             <Form.Group>
+                            <Form.Control
+                            // className={errors.email? styles.invalid: ''}
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            value={values.name}
+                            onChange={handleChange}
+                        />
+                        </Form.Group>
+                        <Form.Group>
+                        <Form.Control
+                        // className={errors.email? styles.invalid: ''}
+                        type="text"
+                        name="surname"
+                        placeholder="Enter your surname"
+                        value={values.surname}
+                        onChange={handleChange}
+                    />
+                    </Form.Group>
+                    <Form.Group>
                                 <Form.Control
                                     className={errors.email? styles.invalid: ''}
                                     type="email"
@@ -123,7 +163,17 @@ function Register() {
     );
 }
 
-export default Register;
+const mapStateToProps = (state)=>{
+return {
+    registerSuccess: state.authReducer.registerSuccess
+};
+};
+
+const mapDispatchToProps = {
+    register
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Register);
 
 
 
