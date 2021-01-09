@@ -1,0 +1,21 @@
+.main{
+    height: calc(100vh - 56px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.heading{
+    margin-bottom: 20px;
+    text-align: center;
+}
+.submitContainer{
+    text-align: center;
+}
+.submitContainer .button{
+    width: 50%;
+
+}
+
+.invalid{
+    border: 1px solid red;
+}
