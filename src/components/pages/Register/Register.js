@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {register} from '../../../store/userActions';
+import {Link} from 'react-router-dom';
 import styles from './registerStyle.module.css';
 
 function Register(props) {
@@ -153,7 +154,7 @@ function Register(props) {
                                     Register
                             </Button>
                             </div>
-
+                                <Link to='/login'>Already registered? Try to login.</Link>
                         </Form>
                     </Col>
                 </Row>

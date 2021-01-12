@@ -1,11 +1,15 @@
 import React from 'react';
-import { Navbar, Nav } from 'react-bootstrap';
+import { Navbar, Nav, Button } from 'react-bootstrap';
 import {NavLink} from 'react-router-dom';
+import {logout} from './../store/userActions';
+import {connect} from 'react-redux';
 
-export default function NavMenu(){
+function NavMenu({isAuthenticated, logout}){
 
     return (
         <Navbar bg="light" variant="light">
+        {
+            isAuthenticated ? 
             <Navbar.Brand>
             <NavLink 
             to='/'
@@ -14,7 +18,25 @@ export default function NavMenu(){
             >
              Home
              </NavLink>
-            </Navbar.Brand>
+            </Navbar.Brand> :
+            <>
+            <NavLink 
+            to='/register'
+            activeClassName = 'activeLink'
+            exact
+            >
+             Register
+             </NavLink>
+             <NavLink 
+             to='/login'
+             activeClassName = 'activeLink'
+             exact
+             >
+              Login
+              </NavLink>
+              </>
+        }
+            
 
             <Nav className="mr-auto">
             <NavLink 
@@ -33,6 +55,26 @@ export default function NavMenu(){
               </NavLink>
 
             </Nav>
+
+            {isAuthenticated && 
+                <Button 
+                variant="success"
+                onClick={logout}
+                >Logout</Button>
+            }
+            
         </Navbar>
     );
 }
+
+const mapStateToProps = (state)=>{
+    return {
+        isAuthenticated: state.authReducer.isAuthenticated
+    };
+}
+
+const mapDispatchToProps = {
+    logout
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavMenu);
