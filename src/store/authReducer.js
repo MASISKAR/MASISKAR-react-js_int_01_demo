@@ -3,7 +3,6 @@ import {checkLoginStatus} from './../helpers/auth';
 
 const defaultState = {
 userId: null,
-registerSuccess: false,
 isAuthenticated: checkLoginStatus(),
 };
 
@@ -32,7 +31,6 @@ export const authReducer = (state = defaultState, action) => {
       return {
         ...state,
         loading: false,
-        registerSuccess: true,
         successMessage: 'You have successfully registered!!!'
       };
     }

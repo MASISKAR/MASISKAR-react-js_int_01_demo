@@ -1,5 +1,5 @@
 import * as actionTypes from './actionTypes';
-
+import { LOGOUT_SUCCESS } from './userActionTypes';
 
 const defaultState = {
   tasks: [],
@@ -26,6 +26,8 @@ export const taskReducer = (state = defaultState, action) => {
 
 
   switch (action.type) {
+    case LOGOUT_SUCCESS: return defaultState;
+
     case actionTypes.LOADING: return loadingState;
 
     case actionTypes.ERROR: {
@@ -53,11 +55,11 @@ export const taskReducer = (state = defaultState, action) => {
       };
     }
 
-    case actionTypes.ADDING_TASK: 
-    return {
-      ...loadingState,
-      addTaskSuccess: false,
-    };
+    case actionTypes.ADDING_TASK:
+      return {
+        ...loadingState,
+        addTaskSuccess: false,
+      };
 
     case actionTypes.ADD_TASK_SUCCESS: {
       return {
@@ -69,23 +71,23 @@ export const taskReducer = (state = defaultState, action) => {
       };
     }
 
-    case actionTypes.REMOVING_TASK:  
-    return {
-      ...loadingState,
-      removeTaskSuccess: false,
-    };
+    case actionTypes.REMOVING_TASK:
+      return {
+        ...loadingState,
+        removeTaskSuccess: false,
+      };
 
     case actionTypes.REMOVE_TASK_SUCCESS: {
-        const newState = {
-          ...state,
-          loading: false,
-          successMessage: 'Task removed successfully!'
-        };
+      const newState = {
+        ...state,
+        loading: false,
+        successMessage: 'Task removed successfully!'
+      };
 
 
-      if(action.from === 'single'){
+      if (action.from === 'single') {
         return {
-         ...newState,
+          ...newState,
           task: null,
           removeTaskSuccess: true,
         };
@@ -100,14 +102,14 @@ export const taskReducer = (state = defaultState, action) => {
       }
 
 
-     
+
     }
 
-    case actionTypes.REMOVING_TASKS: 
-    return {
-      ...loadingState,
-      removeTasksSuccess: false,
-    };
+    case actionTypes.REMOVING_TASKS:
+      return {
+        ...loadingState,
+        removeTasksSuccess: false,
+      };
 
     case actionTypes.REMOVE_TASKS_SUCCESS: {
       let newTasks = [...state.tasks];
@@ -141,9 +143,9 @@ export const taskReducer = (state = defaultState, action) => {
         successMessage: 'Task edited successfully',
       }
 
-      if(action.from === 'single'){
+      if (action.from === 'single') {
         return {
-         ...newState,
+          ...newState,
           task: action.editedTask
         };
       }
@@ -151,7 +153,7 @@ export const taskReducer = (state = defaultState, action) => {
         const tasks = [...state.tasks];
         const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
         tasks[foundIndex] = action.editedTask;
-  
+
         return {
           ...newState,
           tasks: tasks
@@ -167,10 +169,10 @@ export const taskReducer = (state = defaultState, action) => {
     case actionTypes.CHANGE_TASK_STATUS_SUCCESS: {
       let message;
 
-      if(action.status === 'done'){
+      if (action.status === 'done') {
         message = 'Congtatulations, you have completed the task 🎉!!!';
       }
-      else{
+      else {
         message = 'The task is active now!!!'
       }
 
@@ -180,9 +182,9 @@ export const taskReducer = (state = defaultState, action) => {
         successMessage: message,
       }
 
-      if(action.from === 'single'){
+      if (action.from === 'single') {
         return {
-         ...newState,
+          ...newState,
           task: action.editedTask
         };
       }
@@ -190,7 +192,7 @@ export const taskReducer = (state = defaultState, action) => {
         const tasks = [...state.tasks];
         const foundIndex = tasks.findIndex(task => task._id === action.editedTask._id);
         tasks[foundIndex] = action.editedTask;
-  
+
         return {
           ...newState,
           tasks: tasks

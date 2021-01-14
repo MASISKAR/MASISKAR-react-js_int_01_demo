@@ -10,8 +10,12 @@ import { Route, Switch, Redirect } from 'react-router-dom';
 import NavMenu from './components/NavMenu';
 import Register from './components/pages/Register/Register';
 import Login from './components/pages/Login/Login';
+import About from './components/pages/About';
+import Contact from './components/pages/Contact';
 import { ToastContainer, toast } from 'react-toastify';
 import { connect } from 'react-redux';
+import CustomRoute from './components/CustomRoute';
+
 
 class App extends PureComponent {
 
@@ -40,11 +44,13 @@ class App extends PureComponent {
           <div className='app'>
             <NavMenu />
             <Switch>
-              <Route path='/' exact component={ToDo} />
-              <Route path='/task/:id' exact component={SingleTask} />
+              <CustomRoute type='private' path='/' exact component={ToDo} />
+              <CustomRoute type='private' path='/task/:id' exact component={SingleTask} />
               <Route path='/not-found' exact component={NotFound} />
-              <Route path='/register' exact component={Register} />
-              <Route path='/login' exact component={Login} />
+              <CustomRoute  path='/register' exact component={Register} />
+              <CustomRoute  path='/login' exact component={Login} />
+              <Route path='/about' exact component={About} />
+              <Route path='/contact' exact component={Contact} />
               <Redirect to='/not-found' />
             </Switch>
 

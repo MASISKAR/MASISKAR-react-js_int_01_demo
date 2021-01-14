@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import {connect} from 'react-redux';
 import {register} from '../../../store/userActions';
@@ -60,14 +60,6 @@ function Register(props) {
         });
 
     };
-
-    const {registerSuccess, history} = props;
-    useEffect(()=>{
-        if(registerSuccess){
-            history.push('/login');
-        }
-
-    }, [registerSuccess]);
 
     return (
 
@@ -164,70 +156,9 @@ function Register(props) {
     );
 }
 
-const mapStateToProps = (state)=>{
-return {
-    registerSuccess: state.authReducer.registerSuccess
-};
-};
 
 const mapDispatchToProps = {
     register
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Register);
-
-
-
-// function Register() {
-//     const [values, setValues] = useState({
-//         email: '',
-//         password: '',
-//         confirmPassword: ''
-//     });
-
-
-//     const handleSubmit = (event) => {
-//         // event.preventDefault();
-
-// console.log(values);
-//     };
-
-//     const handleChange = ({ target: { name, value } }) => {
-//         setValues({
-//             ...values,
-//             [name]: value
-//         });
-
-//     };
-
-//     return (
-//         <div>
-//             <form action="http://localhost:3001/contact" method='POST'>
-//                 <input
-//                     value={values.email}
-//                     onChange={handleChange}
-//                     type="email"
-//                     name="email"
-//                 />
-//                 <input
-//                     value={values.password}
-//                     onChange={handleChange}
-//                     type="password"
-//                     name="password"
-//                 />
-//                 <input
-//                     value={values.confirmPassword}
-//                     onChange={handleChange}
-//                     type="password"
-//                     name="confirmPassword"
-//                 />
-//                 <input
-//                     type="submit"
-//                     onClick={handleSubmit}
-//                 />
-//             </form>
-
-
-//         </div>
-//     );
-// }
+export default connect(null, mapDispatchToProps)(Register);

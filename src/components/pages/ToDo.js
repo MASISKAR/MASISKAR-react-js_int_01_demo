@@ -81,6 +81,7 @@ class ToDo extends PureComponent {
     render() {
         const { checkedTasks, showConfirm, editTask } = this.state;
         const {tasks} = this.props;
+        console.log('tasks', tasks)
 
         const tasksComponents = tasks.map((task) =>
             <Col key={task._id} xs={12} sm={6} md={4} lg={3} xl={2}>
