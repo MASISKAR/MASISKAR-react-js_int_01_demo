@@ -27,7 +27,7 @@ const mapStateToProps = (state) => {
 };
 
 CustomRoute.propTypes = {
-type: PropTypes.oneOf(['public, private']),
+type: PropTypes.oneOf(['public', 'private']),
 path: PropTypes.string.isRequired,
 exact: PropTypes.bool,
 component: PropTypes.object.isRequired

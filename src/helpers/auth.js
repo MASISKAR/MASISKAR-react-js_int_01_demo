@@ -1,3 +1,9 @@
+import {store} from '../store/store';
+import {LOGOUT_SUCCESS} from '../store/userActionTypes';
+import {history} from '../helpers/history';
+import decode from 'jwt-decode';
+const apiUrl = process.env.REACT_APP_API_URL;
+
 
 export function saveJWT(data) {
     localStorage.setItem('token', JSON.stringify(data));
@@ -10,10 +16,38 @@ export function removeJWT() {
 export function getJWT() {
     const token = localStorage.getItem('token');
     if (!token) {
-        // throw error
+        logout();
+        return null;
     }
 
-    return JSON.parse(token).jwt;
+const parsed = JSON.parse(token);
+
+const decoded = decode(parsed.jwt);
+
+    if(decoded.exp - Date.now()/1000 < 60){
+      return fetch(`${apiUrl}/user/${decoded.userId}/token`, {
+           method: "PUT",
+           headers: {
+            "Content-Type": 'application/json'
+        },
+        body: JSON.stringify({ refreshToken:  parsed.refreshToken})
+       })
+       .then((response) => response.json())
+       .then((newToken) => {
+           if (newToken.error) {
+               throw newToken.error;
+           }
+           saveJWT(newToken);
+           return newToken.jwt;
+       })
+       .catch(()=>{
+        logout();
+        return null;
+       });
+
+    }
+
+    return Promise.resolve(parsed.jwt);
 }
 
 export function checkLoginStatus() {
@@ -21,12 +55,8 @@ export function checkLoginStatus() {
     if (!token) {
         return false;
     }
-    //stugel jamkety
     return true;
 }
-
-const apiUrl = process.env.REACT_APP_API_URL;
-
 
 
 export function loginRequest(data) {
@@ -63,4 +93,10 @@ function request(data, type) {
             }
             return result;
         });
+    }
+
+
+    function logout(){
+        store.dispatch({type: LOGOUT_SUCCESS});
+        history.push('/login'); 
     }

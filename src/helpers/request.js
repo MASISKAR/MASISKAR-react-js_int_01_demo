@@ -1,8 +1,13 @@
 import {getJWT} from './auth';
 
+const defaultError = {message: 'Something went wrong!'};
 
-function request(url, method='GET', body){
-    const jwt = getJWT();
+async function request(url, method='GET', body){
+    const jwt = await getJWT();
+    if(!jwt){
+    return Promise.reject(defaultError);
+    }
+
     const config = {
         method: method,
         headers: {
@@ -21,7 +26,6 @@ function request(url, method='GET', body){
             if (result.error) {
                 throw result.error;
             }
-
             return result;
         });
 }
