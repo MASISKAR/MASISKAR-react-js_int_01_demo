@@ -1,6 +1,6 @@
 import request from '../helpers/request';
 import * as actionTypes from './userActionTypes';
-import {saveJWT,removeJWT, getJWT} from './../helpers/auth';
+import {saveJWT,removeJWT, getLocalJWT} from './../helpers/auth';
 import {history} from './../helpers/history';
 import {loginRequest, registerRequest} from '../helpers/auth';
 
@@ -13,7 +13,7 @@ export function register(data){
 
         registerRequest(data)
         .then(response => {
-            dispatch({type: actionTypes.REGISTER_SUCCESS, userId: response._id});
+            dispatch({type: actionTypes.REGISTER_SUCCESS});
             history.push('/login');  
         })
         .catch(err => {
@@ -41,14 +41,37 @@ export function login(data){
 
 export function logout(){
 
+    return async (dispatch)=>{
+        dispatch({type: actionTypes.AUTH_LOADING});
+        const jwt = getLocalJWT();
+        if(jwt){
+            request(`${apiUrl}/user/sign-out`, "POST", {jwt})
+            .then(() => {
+                removeJWT();
+                dispatch({type: actionTypes.LOGOUT_SUCCESS});
+                history.push('/login');  
+            })
+            .catch(err => {
+                dispatch({type: actionTypes.AUTH_ERROR, error: err.message});  
+            });
+
+        }
+        else {
+            dispatch({type: actionTypes.LOGOUT_SUCCESS});
+            history.push('/login');  
+        } 
+    }
+}
+
+
+export function getUserInfo(){
+
     return (dispatch)=>{
         dispatch({type: actionTypes.AUTH_LOADING});
 
-        request(`${apiUrl}/user/sign-out`, "POST", {jwt: getJWT()})
-        .then(() => {
-            removeJWT();
-            dispatch({type: actionTypes.LOGOUT_SUCCESS});
-            history.push('/login');  
+        request(`${apiUrl}/user`)
+        .then(data => {
+            dispatch({type: actionTypes.GET_USER_INFO_SUCCESS, userInfo: data});  
         })
         .catch(err => {
             dispatch({type: actionTypes.AUTH_ERROR, error: err.message});  

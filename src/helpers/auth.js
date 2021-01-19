@@ -98,5 +98,16 @@ function request(data, type) {
 
     function logout(){
         store.dispatch({type: LOGOUT_SUCCESS});
+        removeJWT();
         history.push('/login'); 
+    }
+
+    export function getLocalJWT(){
+        const token = localStorage.getItem('token');
+        if (!token) {
+            return null;
+        }
+    
+    return JSON.parse(token).jwt;
+    
     }
