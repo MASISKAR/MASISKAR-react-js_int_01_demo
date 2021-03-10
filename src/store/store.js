@@ -1,8 +1,9 @@
 
-import {createStore, applyMiddleware} from 'redux';
+import {createStore, applyMiddleware, combineReducers} from 'redux';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
-import {mainReducer} from './reducer';
+import {taskReducer} from './taskReducer';
+import {authReducer} from './authReducer';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
 const middlewaresArr = [thunk];
@@ -11,6 +12,14 @@ if(process.env.NODE_ENV === "development"){
 }
 
 const middlewares = applyMiddleware(...middlewaresArr);
+
+
+const mainReducer = combineReducers({
+    taskReducer,
+    authReducer
+});
+
+
 
 export const store = createStore(mainReducer, composeWithDevTools(middlewares));
 

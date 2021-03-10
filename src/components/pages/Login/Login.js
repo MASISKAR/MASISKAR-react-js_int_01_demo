@@ -1,53 +1,35 @@
 import React, { useState } from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import {connect} from 'react-redux';
-import {register} from '../../../store/userActions';
+import {login} from '../../../store/userActions';
+import styles from './loginStyle.module.css';
 import {Link} from 'react-router-dom';
-import styles from './registerStyle.module.css';
 
-function Register(props) {
+function Login(props) {
     const [values, setValues] = useState({
         email: '',
-        password: '',
-        confirmPassword: '',
-        name: '',
-        surname: ''
+        password: ''
     });
 
     const [errors, setErrors] = useState({
         email: null,
-        password: null,
-        confirmPassword: null
+        password: null
     });
 
     const handleSubmit = () => {
-        const {email, password, confirmPassword} = values;
-        let valid = true;
-
-            let passwordMessage = null;
-        if(!confirmPassword){
-            passwordMessage = 'Password is required';
-            valid = false;
-        }
-        else if(password !== confirmPassword){
-                passwordMessage = "Passwords didn't match";
-                valid = false;
-        }
-        else if(password !== confirmPassword){
-                passwordMessage = "Passwords didn't match"
-            }
+        const {email, password} = values;
 
         setErrors({
             email: email ? null : 'Email is required',
-            confirmPassword: passwordMessage,
             password: password ? null : 'Password is required'
         });
 
-        if(valid){
-            props.register(values);
+        if(email && password){
+            console.log(values);
+            props.login(values);
         }
 
-   
+    
     };
 
     const handleChange = ({ target: { name, value } }) => {
@@ -71,29 +53,8 @@ function Register(props) {
                 <Row className="justify-content-center">
                     <Col xs={12} sm={8} md={6}>
                         <Form>
-                            <h3 className={styles.heading}>Register</h3>
-                            <Form.Group>
-                            <Form.Control
-                            // className={errors.email? styles.invalid: ''}
-                            type="text"
-                            name="name"
-                            placeholder="Enter your name"
-                            value={values.name}
-                            onChange={handleChange}
-                        />
-                        </Form.Group>
-                        <Form.Group>
-                        <Form.Control
-                        // className={errors.email? styles.invalid: ''}
-                        type="text"
-                        name="surname"
-                        placeholder="Enter your surname"
-                        value={values.surname}
-                        onChange={handleChange}
-                    />
-                    </Form.Group>
+                            <h3 className={styles.heading}>Login</h3>
                     <Form.Group>
-
                                 <Form.Control
                                     className={errors.email? styles.invalid: ''}
                                     type="email"
@@ -127,31 +88,15 @@ function Register(props) {
                                 
                             </Form.Group>
 
-                            <Form.Group controlId="formBasicPassword">
-                                <Form.Control
-                                className={errors.confirmPassword? styles.invalid: ''}
-                                    type="password"
-                                    placeholder="Confirm Password"
-                                    value={values.confirmPassword}
-                                    onChange={handleChange}
-                                    name="confirmPassword"
-                                />
-                                <Form.Text className="text-danger">
-                                    {errors.confirmPassword}
-                                </Form.Text>
-                            </Form.Group>
-
-                            <div className={styles.submitContainer}>
+                            <div className="text-center">
                                 <Button
                                     variant="primary"
                                     onClick={handleSubmit}
                                 >
-                                    Register
+                                    Login
                             </Button>
                             </div>
-
-                                <Link to='/login'>Already registered? Try to login.</Link>
-
+                            <Link to='/register'>Don't have account yet? Register now!</Link>
                         </Form>
                     </Col>
                 </Row>
@@ -162,11 +107,8 @@ function Register(props) {
 }
 
 
-
 const mapDispatchToProps = {
-    register
+    login
 };
 
-export default connect(null, mapDispatchToProps)(Register);
-
-
+export default connect(null, mapDispatchToProps)(Login);

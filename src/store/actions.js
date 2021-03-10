@@ -1,4 +1,4 @@
-import request from '../helpers/request'
+import request from '../helpers/request';
 import * as actionTypes from './actionTypes';
 
 const apiUrl = process.env.REACT_APP_API_URL;
@@ -66,7 +66,6 @@ export function removeTask(taskId, from='tasks'){
 
         request(`${apiUrl}/task/${taskId}`, 'DELETE')
         .then(() => {
-            
             dispatch({type: actionTypes.REMOVE_TASK_SUCCESS, taskId, from});  
         })
         .catch(err => {
