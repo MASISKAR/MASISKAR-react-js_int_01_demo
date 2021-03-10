@@ -32,6 +32,9 @@ function Register(props) {
         else if(password !== confirmPassword){
                 passwordMessage = "Passwords didn't match";
                 valid = false;
+        }
+        else if(password !== confirmPassword){
+                passwordMessage = "Passwords didn't match"
             }
 
         setErrors({
@@ -41,11 +44,10 @@ function Register(props) {
         });
 
         if(valid){
-            console.log(values);
             props.register(values);
         }
 
-    
+   
     };
 
     const handleChange = ({ target: { name, value } }) => {
@@ -91,6 +93,7 @@ function Register(props) {
                     />
                     </Form.Group>
                     <Form.Group>
+
                                 <Form.Control
                                     className={errors.email? styles.invalid: ''}
                                     type="email"
@@ -146,7 +149,9 @@ function Register(props) {
                                     Register
                             </Button>
                             </div>
+
                                 <Link to='/login'>Already registered? Try to login.</Link>
+
                         </Form>
                     </Col>
                 </Row>
@@ -157,8 +162,11 @@ function Register(props) {
 }
 
 
+
 const mapDispatchToProps = {
     register
 };
 
 export default connect(null, mapDispatchToProps)(Register);
+
+

@@ -51,6 +51,7 @@ class App extends PureComponent {
               <CustomRoute  path='/login' exact component={Login} />
               <Route path='/about' exact component={About} />
               <Route path='/contact' exact component={Contact} />
+              <Route path='/register' exact component={Register} />
               <Redirect to='/not-found' />
             </Switch>
 
